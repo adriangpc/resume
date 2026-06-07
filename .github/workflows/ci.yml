@@ -27,6 +27,19 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
+      - name: Notify Zo on CI Failure
+        if: failure()
+        run: |
+          curl -X POST "https://adrianmilitante.zo.space/api/resume-ci-alert" \
+            -H "Authorization: Bearer ${{ secrets.RESUME_CI_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "status": "failed",
+              "workflow": "Playwright Tests",
+              "branch": "${{ github.ref_name }}",
+              "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }'
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
