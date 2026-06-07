@@ -211,10 +211,13 @@ test.describe('Resume page', () => {
     });
 
     test('experience section has company and role', async ({ page }) => {
+      const experienceSection = page.locator('main').getByText('Professional Experience').first();
+      const experienceContainer = experienceSection.locator('..').locator('..');
+      
       const companies = ['WS Audiology', 'Continental', 'Gemalto', 'Rohm'];
       
       for (const company of companies) {
-        const element = page.getByText(company);
+        const element = experienceContainer.getByText(company).first();
         await expect(element).toBeVisible();
       }
     });
@@ -223,8 +226,9 @@ test.describe('Resume page', () => {
       const certSection = page.getByText('Certifications');
       await expect(certSection).toBeVisible();
       
-      // Should have ISTQB certification visible
-      const istqb = page.getByText(/ISTQB/);
+      // Should have ISTQB certification visible in the certifications section
+      const certContainer = certSection.locator('..').locator('..');
+      const istqb = certContainer.locator('span:has-text("ISTQB")').first();
       await expect(istqb).toBeVisible();
     });
   });
