@@ -31,7 +31,7 @@ jobs:
         if: failure()
         run: |
           curl -X POST "https://adrianmilitante.zo.space/api/resume-ci-alert" \
-            -H "Authorization: Bearer ${{ secrets.RESUME_CI_SECRET }}" \
+            -H "X-CI-Token: ${{ secrets.RESUME_CI_SECRET }}" \
             -H "Content-Type: application/json" \
             -d '{
               "status": "failed",
