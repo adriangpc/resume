@@ -1,4 +1,4 @@
-# Adrian Go Militante — Resume
+# Adrian Militante — Resume
 
 [![CI](https://github.com/adriangpc/resume/actions/workflows/ci.yml/badge.svg)](https://github.com/adriangpc/resume/actions/workflows/ci.yml)
 
