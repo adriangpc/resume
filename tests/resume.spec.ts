@@ -39,7 +39,7 @@ test.describe('Resume page', () => {
       const linkedinLink = page.locator('a[href*="linkedin.com/in/adrianmilitante"]');
       
       // Check link exists
-      await expect(linkedinLink).toHaveCount(2); // Header + Footer
+      await expect(linkedinLink).toHaveCount(1); // Header only, Footer was removed due to redundancy.
       
       // Check href format
       const href = await linkedinLink.first().getAttribute('href');
