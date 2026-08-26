@@ -2,15 +2,10 @@ name: CI
 
 on:
   workflow_dispatch:
-  # Auto-triggers (push/pull_request) disabled 2026-08-26 — GitHub Actions runs
-  # on this account are stuck/failing at startup (zero jobs dispatched, zero
-  # billable runner time), most likely a spending limit or concurrency cap.
-  # Re-enable once that's resolved account-side (this repo/workflow has no
-  # bug to fix). Can still be run manually via the Actions tab until then.
-  # push:
-  #   branches: [main]
-  # pull_request:
-  #   branches: [main]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
