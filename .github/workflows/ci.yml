@@ -1,10 +1,16 @@
 name: CI
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
+  # Auto-triggers (push/pull_request) disabled 2026-08-26 — GitHub Actions runs
+  # on this account are stuck/failing at startup (zero jobs dispatched, zero
+  # billable runner time), most likely a spending limit or concurrency cap.
+  # Re-enable once that's resolved account-side (this repo/workflow has no
+  # bug to fix). Can still be run manually via the Actions tab until then.
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
 
 jobs:
   test:
@@ -26,19 +32,6 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
-
-      - name: Notify Zo on CI Failure
-        if: failure()
-        run: |
-          curl -X POST "https://adrianmilitante.zo.space/api/resume-ci-alert" \
-            -H "X-CI-Token: ${{ secrets.RESUME_CI_SECRET }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "status": "failed",
-              "workflow": "Playwright Tests",
-              "branch": "${{ github.ref_name }}",
-              "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            }'
 
       - uses: actions/upload-artifact@v4
         if: always()
